@@ -1,0 +1,105 @@
+from tkinter import *
+from tkinter import messagebox
+
+pizza =Tk()
+pizza.geometry("600x500") #Tkinter Box Size
+pizza.title("Pizza on Demand") # Title
+
+#<Name Entry>
+name_label = Label(pizza, text="Name")
+name_label.grid(row=0,column=0)#Location
+#Name Text box size
+name_entry = Entry(pizza,width=30)
+name_entry.grid(row=0, column=1)#Location
+
+#<Address>
+address_label = Label(pizza, text="Address")
+address_label.grid(row=1,column=0)
+
+address_entry = Entry(pizza,width=30)#Address Text box size
+address_entry.grid(row=1, column=1)#Location
+
+#<Phone>
+phone_label = Label(pizza, text="Phone Number")
+phone_label.grid(row=2,column=0)
+
+phone_entry = Entry(pizza,width=30)#Phone Text box size
+phone_entry.grid(row=2, column=1) #Location
+
+
+
+#<create Pizza List>
+
+#Topping Options
+my_pizza_List = ["Pepperoni","Mushrooms","Onions", "Sausage", "Black Olives","Green Peppers", "Pineapple","extra cheese", "Spinach","No Toppings"]
+
+#List box function
+pizza_List = Listbox(pizza, selectmode=MULTIPLE, bg="black", fg="red")
+pizza_List.grid(row=4, column=1)#List Box Location
+
+for item in my_pizza_List:
+        pizza_List.insert(5, item)
+
+#add pizza command
+def add_pizza():
+        results = ""
+        for item in pizza_List.curselection():
+                result = str(pizza_List.get(item)) + "\n"
+
+                add_lbl.config(text="Your Pizza Selection: " + "\n" + result)
+
+add_lbl=Label(pizza, text="")
+add_lbl.grid(row=5, column=1)
+
+add_button = Button (pizza, text="Add Pizza", command=add_pizza)
+add_button.grid(row=5, column=0)
+
+
+#checkout command
+def check():
+#Name output
+        text1 = name_entry.get()
+        new_lbl = Label(pizza, text="Name: " + text1)
+        new_lbl.grid(row=5,column=2)
+#Address output
+        text2 = address_entry.get()
+        new_lbl2 = Label(pizza, text= "Address: " + text2)
+        new_lbl2.grid(row=6, column=2)
+#Phone output
+        text3 = phone_entry.get()
+        new_lbl3 = Label(pizza, text=" Phone Number: " + text3)
+        new_lbl3.grid(row=7,column=2)
+
+check_button = Button(pizza, text="check out", command=check)
+check_button.grid(row=6, column=0)
+
+
+#Delete command
+
+def deleteme():
+        pizza_List.delete(0,5)
+
+del_button = Button(pizza, text="Delete Order", command=deleteme)
+del_button.grid(row=7, column=0)
+
+#Add drinks
+drinks = StringVar()
+drinks.set("Choose a drink")
+drink = OptionMenu(pizza, drinks, "Coca-Cola","Sprite","Rc-Cola","Root-Beer", "Hot Dog Water")
+drink.grid(row=8,column=0)
+
+
+# exit button
+def exitt():
+        answer = messagebox.askyesno("Are you sure you want to exit")
+        if answer == 1:
+                pizza.destroy()
+        else:
+                return
+
+
+exit_button = Button(pizza, text="Exit", command=exitt)
+exit_button.grid(row=4, column=7)
+
+
+pizza.mainloop() #Loop
